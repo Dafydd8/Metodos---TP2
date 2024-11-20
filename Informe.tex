@@ -19,7 +19,7 @@
     footskip=1cm
 }
 
-\title{Métodos Computacionales - Trabajo Práctico 1}
+\title{Métodos Computacionales - Trabajo Práctico 2}
 \author{Josefina Jahde, Dafydd Jenkins}
 \date{\today}
 
@@ -195,15 +195,9 @@ Entonces:
 Así, las coordenadas de $t^2$ en $B_C$ son [$0, 0, \frac{1}{3}, 1$]
 
 \section*{Ejercicio 2}
-Considerando $Q(t) = MP$ y $P = \begin{bmatrix}P_0 \\ P_1 \\ P_2 \\ P_3\end{bmatrix}$, siendo los $P_i$ bloques de 2x1, la dimensión de $P$ es 8x1. Por otro lado, $Q(t)$ tiene dimensión 1x1, por lo que $M$ debe ser de dimensión 1x8 para que el producto $MP$ sea factible.
+Considerando $Q(t) = MP$ y $P = \begin{bmatrix}P_0 \\ P_1 \\ P_2 \\ P_3\end{bmatrix}$, siendo los $P_i$ bloques de 2x1, la dimensión de $P$ es 8x1. Por otro lado, $Q(t)$ tiene dimensión 1x1, por lo que $M$ debe ser de dimensión 1x8 para que el producto $MP$ sea factible. Ahora, como trabajaremos con $P$ considerándola una matriz de 4x1, decimos que $M$ es una matriz de 1x4.
 
-Com $Q(t) = (1 - t)^3 P_0 + 3(1 - t)^2 t P_1 + 3(1 - t) t^2 P_2 + t^3 P_3$, para escribirlo como $M \begin{bmatrix}P_0 \\ P_1 \\ P_2 \\ P_3\end{bmatrix}$, $M$ debe ser:
-$$
-M = \begin{bmatrix} (1 - t)^3 & (1 - t)^3 & 3(1 - t)^2 t & 3(1 - t)^2 t & 3(1 - t) t^2 & 3(1 - t) t^2 & t^3 & t^3 \end{bmatrix}
-$$
-
-Por simplicidad, en los siguientes ejercicios, como se trabajará con $P$ como una matriz de 4x1, usaremos $M$ de tamaño 1x4 e igual a:
-
+Como $Q(t) = (1 - t)^3 P_0 + 3(1 - t)^2 t P_1 + 3(1 - t) t^2 P_2 + t^3 P_3$, para escribirlo como $Q(t) = M \begin{bmatrix}P_0 \\ P_1 \\ P_2 \\ P_3\end{bmatrix}$, $M$ debe ser:
 $$
 M = \begin{bmatrix} (1 - t)^3 & 3(1 - t)^2 t & 3(1 - t) t^2 & t^3 \end{bmatrix}
 $$
@@ -309,10 +303,10 @@ Al graficar en los datos originales $D_i$ y la curva de Bézier ajustada, la fig
     \caption{Curva de Bézier ajustada a los datos originales (ej4)}
 \end{figure}
 
-La implementación para la obtención de los resultados y la gráfica se encuentra la sección \texttt{TP2\_Notebook.ipynb} en la sección de \textbf{Ejercicio 4}.
+La implementación para la obtención de los resultados y la gráfica se encuentra en el archivo \texttt{TP2\_Notebook.ipynb} en la sección de \textbf{Ejercicio 4}.
 
 \section{Ejercicio 5}
-Se repitieron los pasos del ejercicio anterior para otro set de datos y la curva obtenida (junto con los datos), se muestra en la siguiente figura:
+Se repitieron los pasos del ejercicio anterior para otro set de datos (sección \textbf{Ejercicio 5} del notebook) y la curva obtenida (junto con los datos), se muestra en la siguiente figura:
 
 \begin{figure}[H]
     \centering
@@ -321,4 +315,49 @@ Se repitieron los pasos del ejercicio anterior para otro set de datos y la curva
 \end{figure}
 
 Como se ve, pareciera que los datos están distribuidos casi perfectamente como una elipse. Sin embargo, esta figura no parece ser replicable con sólo una curva de bézier. Por eso, se nos ocurrió que para ajustar mejor los datos, se pueden usar varias curvas de bézier (al menos 2), cada una ajustada a un subconjunto de los datos. 
+
+\section{Ejercicio 6}
+Incialmente dividimos los datos en 2 grupos y ajustamos una curva a cada uno de ellos. El resultado fue el que se ve a continuación:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Imagenes/2_curvas_inconexas.png}
+    \caption{Ajuste de los datos con dos curvas}
+\end{figure}
+
+Luego, le dimos continuidad $C^0$ a las curvas:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Imagenes/2_c0.png}
+    \caption{Ajuste con dos curvas con continuidad $C^0$}
+\end{figure}
+
+Finalmente, para hacer más suave la transición entre curvas, les dimos continuidad $C^1$:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Imagenes/2_c1.png}
+    \caption{Ajuste con dos curvas con continuidad $C^1$}
+\end{figure}
+
+Como se puede ver, al darle continuidad a las curvas, el ajuste empeora. Para las curvas inconexas, el error era 111.354,3465; con continuidad $C^0$, el error sube a 121.279,5688; con continuidad $C^2$, el error se dispara a 439.589,6507. Por este motivo, decidimos ajustar los datos divdiéndolos en más subconjuntos (elegimos 30). El resultado es el que se muestra a continuación:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Imagenes/30_c1.png}
+    \caption{Ajuste con treinta curvas con continuidad $C^1$}
+\end{figure}
+
+Con 30 segmentos inconexos, el error es de 1.117,9775, y cuando les damos continuidad $C^1$, 10.536,0116. Si bien sigue habiendo un aumento considerable en el error, es mucho menor que antes.
+
+La implementación de todo este ejercicio se encuentra en la sección \textbf{Ejercicio 6} del notebook.
+
+FInalmente, como un bonus, ajustamos los datos del \texttt{archivo\_3.npy} con 100 curvas, obteniendo el siguiente resultado:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Imagenes/perrito.png}
+    \caption{Ajuste con 100 curvas con continuidad $C^1$}
+\end{figure}
+
 \end{document}
