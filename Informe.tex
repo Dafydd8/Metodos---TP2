@@ -244,7 +244,7 @@ Sustituyendo \( Q(t_i) \) en la expresión del error total:
     E_{\text{total}} = \sum_{i=0}^{N-1} \|D_i - M_iP\|^2,
 \]
 
-De aquí, se puede ver que $E_{total} = |D_1 - M_1P\|^2 +$ ... $+ |D_N - M_NP\|^2 = |D - MP\|^2$ 
+De aquí, se puede ver que $E_{total} = |D_0 - M_0P\|^2 +$ ... $+ |D_{N-1} - M_{N-1}P\|^2 = |D - MP\|^2$ 
 
 Así, se demostró que la función objetivo \( E_{\text{total}}\) se puede expresar en forma matricial como  \( E_{\text{total}} = \|D - MP\|^2 \)
 
@@ -267,7 +267,7 @@ Como las columnas de $M$ son LI, sabemos que $M^TM$ es invertible y resolvemos p
 P = (M^\top M)^{-1} M^\top D.
 \]
 
-De esta manera se consguen la solución \( P \) que contiene los puntos de control \( P_0, P_1, P_2, P_3 \), que definen la curva de Bézier cúbica que mejor ajusta a los puntos de datos \( D_i \).
+De esta manera se consigue la solución $\hat P$ que contiene los puntos de control \( P_0, P_1, P_2, P_3 \), que definen la curva de Bézier cúbica que mejor ajusta a los puntos de los datos .
 
 \section*{Ejercicio 4}
 La curva de mejor ajuste para los datos dados está dada por $Q(t) = M \hat P$, donde:
@@ -341,7 +341,7 @@ Finalmente, para hacer más suave la transición entre curvas, les dimos continu
     \caption{Ajuste con dos curvas con continuidad $C^1$}
 \end{figure}
 
-Como se puede ver, al darle continuidad a las curvas, el ajuste empeora. Para las curvas inconexas, el error era 111.354,3465; con continuidad $C^0$, el error sube a 121.279,5688; con continuidad $C^2$, el error se dispara a 439.589,6507. Por este motivo, decidimos ajustar los datos divdiéndolos en más subconjuntos (elegimos 30). El resultado es el que se muestra a continuación:
+Como se puede ver, al darle continuidad a las curvas, el ajuste empeora. Para las curvas inconexas, el error era 111.354,3465; con continuidad $C^0$, el error sube a 121.279,5688; con continuidad $C^2$, el error se dispara a 439.589,6507. Por este motivo, decidimos ajustar los datos divdiéndolos en más subconjuntos (elegimos 30, y la división se muestra en el gráfico alternando el color con el que se muestran entre azul y verde). El resultado es el que se muestra a continuación:
 
 \begin{figure}[H]
     \centering
